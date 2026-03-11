@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>RK Bakery</title>
 
 <link rel="manifest" href="manifest.json">
 
 <style>
+
 body{
 font-family:Arial;
-text-align:center;
 background:#fff2f5;
+text-align:center;
 padding:20px;
 }
 
@@ -18,22 +21,29 @@ h1{
 color:#ff2e63;
 }
 
+.cake{
+background:white;
+padding:15px;
+margin:15px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+img{
+width:100%;
+border-radius:10px;
+}
+
 button{
-padding:12px 20px;
-margin:10px;
-font-size:16px;
 background:#ff2e63;
 color:white;
 border:none;
+padding:12px 20px;
+margin:10px;
 border-radius:6px;
+font-size:16px;
 }
 
-.card{
-background:white;
-padding:15px;
-margin:10px;
-border-radius:10px;
-}
 </style>
 
 </head>
@@ -43,47 +53,106 @@ border-radius:10px;
 <h1>RK BAKERY</h1>
 <p>Fresh Cakes Available</p>
 
-<div class="card">
+<div class="cake">
+<img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587">
 <h3>Chocolate Cake</h3>
-<p>₹500</p>
+<p>₹240</p>
+<button onclick="addCart('Chocolate Cake',350)">Add to Cart</button>
 </div>
 
-<div class="card">
+<div class="cake">
+<img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729">
 <h3>Strawberry Cake</h3>
 <p>₹600</p>
+<button onclick="addCart('Strawberry Cake',200)">Add to Cart</button>
 </div>
 
-<button onclick="order()">Order on WhatsApp</button>
-<button onclick="map()">Bakery Location</button>
+<div id="cart">
 
-<br><br>
+<h2>Cart</h2>
+
+<p id="items">No Items</p>
+
+<p>Total ₹<span id="total">0</span></p>
+
+<button onclick="order()">Order on WhatsApp</button>
+
+<button onclick="pay()">UPI Payment</button>
+
+</div>
+
+<br>
+
+<button onclick="map()">Bakery Location</button>
 
 <button id="installBtn">Download App</button>
 
 <script>
 
+let cart=[];
+let total=0;
+
+function addCart(name,price){
+
+cart.push(name);
+
+total+=price;
+
+document.getElementById("items").innerHTML=cart.join("<br>");
+
+document.getElementById("total").innerText=total;
+
+}
+
 function order(){
-window.open("https://wa.me/916378467476?text=Hello RK Bakery I want to order cake");
+
+let msg="Hello RK Bakery I want to order:\n"+cart.join("\n")+" Total ₹"+total;
+
+window.open("https://wa.me/916378467476?text="+encodeURIComponent(msg));
+
+}
+
+function pay(){
+
+window.open("upi://pay?pa=yourupi@upi&pn=RK Bakery&am="+total);
+
 }
 
 function map(){
+
 window.open("https://maps.google.com/?q=26.8818326,75.2389793");
+
+}
+
+if ('serviceWorker' in navigator) {
+
+navigator.serviceWorker.register('sw.js');
+
 }
 
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
+
 e.preventDefault();
+
 deferredPrompt = e;
+
 });
 
 document.getElementById("installBtn").addEventListener("click", () => {
+
 if(deferredPrompt){
+
 deferredPrompt.prompt();
+
 }
+
 });
 
 </script>
 
 </body>
+
 </html>
+
