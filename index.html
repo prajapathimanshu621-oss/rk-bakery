@@ -9,11 +9,19 @@ body{
 font-family: Arial;
 text-align:center;
 background:#fff2f5;
-padding-top:60px;
+padding:30px;
 }
 
 h1{
 color:#ff2e63;
+}
+
+.card{
+background:white;
+padding:20px;
+margin:15px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 button{
@@ -26,7 +34,6 @@ border:none;
 border-radius:6px;
 }
 </style>
-
 </head>
 
 <body>
@@ -34,18 +41,33 @@ border-radius:6px;
 <h1>RK BAKERY</h1>
 <p>Fresh Cakes Available</p>
 
+<div class="card">
+<h2>Chocolate Cake</h2>
+<p>Price: ₹240</p>
+</div>
+
+<div class="card">
+<h2>Strawberry Cake</h2>
+<p>Price: ₹200</p>
+</div>
+
 <button onclick="order()">Order on WhatsApp</button>
 <button onclick="map()">Bakery Location</button>
 
 <script>
+
+let maxDistance = 70; // delivery limit 70km
+
 function order(){
-window.open("https://wa.me/");
+window.open("https://wa.me/916378467476?text=Hello RK Bakery I want to order cake");
 }
 
 function map(){
 window.open("https://maps.google.com/?q=26.8818326,75.2389793");
 }
+
 </script>
 
 </body>
 </html>
+
